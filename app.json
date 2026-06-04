@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "rakam",
+    "name": "Rakam",
     "slug": "rakam",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,9 +8,9 @@
     "scheme": "rakam",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash-icon.png",
+      "image": "./assets/images/favicon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#0F0D22"
     },
     "ios": {
       "supportsTablet": true
@@ -22,7 +22,8 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.anonymous.rakam"
     },
     "web": {
       "bundler": "metro",
@@ -30,7 +31,18 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/favicon.png",
+          "imageWidth": 120,
+          "resizeMode": "contain",
+          "backgroundColor": "#0F0D22"
+        }
+      ],
+      "expo-secure-store",
+      "react-native-localize"
     ],
     "experiments": {
       "typedRoutes": true
