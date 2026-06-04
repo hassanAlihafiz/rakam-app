@@ -1,0 +1,131 @@
+{
+  "home": {
+    "my_numbers": "أرقامي",
+    "recent_otps": "رموز التحقق الأخيرة",
+    "add_number": "إضافة رقم آخر",
+    "empty_title": "احصل على رقمك الأول",
+    "empty_desc": "اختر باقة ورقمك جاهز خلال ثوانٍ.",
+    "empty_cta": "اختر باقة",
+    "no_messages": "لا توجد رسائل بعد",
+    "us_number": "رقم أمريكي",
+    "uk_number": "رقم بريطاني",
+    "time_just_now": "الآن",
+    "time_min_ago": "منذ {{count}} د",
+    "time_hr_ago": "منذ {{count}} س",
+    "time_yesterday": "أمس",
+    "copy_otp": "نسخ {{code}}"
+  },
+  "auth": {
+    "brand_title": "Rakam رقم",
+    "sign_in": "تسجيل الدخول",
+    "sign_up": "إنشاء حساب",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "create_account": "إنشاء حساب",
+    "or_magic_link": "أو المتابعة برابط سحري",
+    "already_have_account": "لديك حساب بالفعل؟",
+    "email_invalid": "أدخل بريدًا إلكترونيًا صالحًا",
+    "password_min": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+    "password_required": "كلمة المرور مطلوبة",
+    "forgot_password": "نسيت كلمة المرور؟",
+    "no_account": "ليس لديك حساب؟",
+    "invalid_credentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+    "show_password": "إظهار كلمة المرور",
+    "hide_password": "إخفاء كلمة المرور",
+    "magic_link": "أرسل لي رابطًا سحريًا",
+    "magic_link_heading": "تسجيل الدخول بالبريد",
+    "magic_link_subtitle": "سنرسل لك رابطًا بنقرة واحدة — بدون كلمة مرور.",
+    "send_magic_link": "أرسل لي رابطًا سحريًا",
+    "back_to_signin": "العودة لتسجيل الدخول",
+    "check_email": "تحقق من بريدك الإلكتروني",
+    "check_email_desc": "أرسلنا رابطًا إلى {{email}}",
+    "open_mail": "فتح البريد",
+    "resend": "لم يصلك؟ أعد الإرسال",
+    "resend_in": "إعادة الإرسال خلال {{seconds}} ث",
+    "signing_in": "جاري تسجيل دخولك…",
+    "callback_failed": "رابط تسجيل الدخول غير صالح أو منتهي الصلاحية.",
+    "go_to_signin": "العودة لتسجيل الدخول",
+    "sign_out": "تسجيل الخروج",
+    "sign_out_confirm": "هل أنت متأكد أنك تريد تسجيل الخروج؟"
+  },
+  "common": {
+    "copy": "نسخ",
+    "share": "مشاركة",
+    "copied": "تم النسخ!",
+    "loading": "جاري التحميل...",
+    "error_network": "تعذر التحميل. حاول مرة أخرى",
+    "try_again": "حاول مرة أخرى",
+    "cancel": "إلغاء",
+    "ok": "موافق",
+    "offline": "أنت غير متصل. قد لا تعمل بعض الميزات."
+  },
+  "number": {
+    "inbox": "الوارد",
+    "no_messages": "لا توجد رسائل لهذا الرقم",
+    "release": "إلغاء الرقم",
+    "release_title": "إلغاء هذا الرقم؟",
+    "release_warning": "سيتم إلغاء هذا الرقم ولن تستقبل رسائل SMS عليه. لا يمكن التراجع.",
+    "release_confirm": "إلغاء",
+    "us_number": "رقم أمريكي",
+    "uk_number": "رقم بريطاني"
+  },
+  "profile": {
+    "subscription": "الاشتراك",
+    "no_plan": "لا توجد باقة نشطة",
+    "manage_subscription": "إدارة الاشتراك",
+    "preferences": "التفضيلات",
+    "notifications": "الإشعارات",
+    "language": "اللغة",
+    "theme": "المظهر",
+    "support": "الدعم",
+    "email_us": "راسلنا",
+    "terms_privacy": "الشروط والخصوصية",
+    "renewal": "يتجدد {{date}}"
+  },
+  "settings": {
+    "language_title": "اللغة",
+    "english": "English",
+    "arabic": "العربية",
+    "restart_required": "أعد تشغيل التطبيق لتطبيق تغيير اللغة بالكامل."
+  },
+  "pricing": {
+    "title": "اختر باقة",
+    "monthly": "شهري",
+    "annual": "سنوي  -17%",
+    "per_month": "/شهر",
+    "popular": "⭐ الأكثر شعبية",
+    "select": "اختيار",
+    "plan": {
+      "us_basic": "أساسي أمريكي",
+      "uk_basic": "أساسي بريطاني",
+      "global_pro": "عالمي برو"
+    },
+    "feature": {
+      "us_number": "رقم أمريكي واحد",
+      "uk_number": "رقم بريطاني واحد",
+      "us_uk_numbers": "أرقام أمريكية وبريطانية",
+      "unlimited_sms": "رسائل SMS غير محدودة",
+      "priority_support": "دعم أولوية"
+    }
+  },
+  "checkout": {
+    "processing_title": "جاري إعداد رقمك…",
+    "processing_desc": "عادةً يستغرق ذلك بضع ثوانٍ",
+    "timeout": "الإعداد يستغرق وقتًا أطول من المتوقع. يمكنك العودة والمحاولة مرة أخرى.",
+    "go_back": "العودة",
+    "success_title": "رقمك جاهز!",
+    "success_desc": "ابدأ باستقبال رموز OTP فورًا.",
+    "go_home": "الذهاب للرئيسية"
+  },
+  "onboarding": {
+    "slide1_title": "احصل على رقمك",
+    "slide1_desc": "رقم أمريكي أو بريطاني حقيقي على هاتفك — جاهز خلال ثوانٍ.",
+    "slide2_title": "أكثر من 100 تطبيق",
+    "slide2_desc": "واتساب، جوجل، باي بال، إنستغرام، والمزيد.",
+    "slide3_title": "صُمم للشرق الأوسط",
+    "slide3_desc": "للسعودية والإمارات وباكستان والمنطقة بأكملها.",
+    "get_started": "ابدأ الآن",
+    "have_account": "لدي حساب بالفعل",
+    "skip": "تخطي"
+  }
+}

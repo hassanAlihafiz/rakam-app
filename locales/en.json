@@ -1,0 +1,131 @@
+{
+  "home": {
+    "my_numbers": "My Numbers",
+    "recent_otps": "Recent OTPs",
+    "add_number": "Add Another Number",
+    "empty_title": "Get your first number",
+    "empty_desc": "Pick a plan and your number is ready in seconds.",
+    "empty_cta": "Choose a Plan",
+    "no_messages": "No messages yet",
+    "us_number": "US NUMBER",
+    "uk_number": "UK NUMBER",
+    "time_just_now": "just now",
+    "time_min_ago": "{{count}} min ago",
+    "time_hr_ago": "{{count}} hr ago",
+    "time_yesterday": "yesterday",
+    "copy_otp": "Copy {{code}}"
+  },
+  "auth": {
+    "brand_title": "Rakam رقم",
+    "sign_in": "Sign In",
+    "sign_up": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "create_account": "Create account",
+    "or_magic_link": "Or continue with magic link",
+    "already_have_account": "Already have an account?",
+    "email_invalid": "Enter a valid email",
+    "password_min": "Password must be at least 8 characters",
+    "password_required": "Password is required",
+    "forgot_password": "Forgot password?",
+    "no_account": "Don't have an account?",
+    "invalid_credentials": "Invalid email or password",
+    "show_password": "Show password",
+    "hide_password": "Hide password",
+    "magic_link": "Send me a magic link",
+    "magic_link_heading": "Sign in with email",
+    "magic_link_subtitle": "We'll email you a one-tap link — no password needed.",
+    "send_magic_link": "Send me a magic link",
+    "back_to_signin": "Back to sign in",
+    "check_email": "Check your email",
+    "check_email_desc": "We sent a link to {{email}}",
+    "open_mail": "Open Mail",
+    "resend": "Didn't get it? Resend",
+    "resend_in": "Resend in {{seconds}}s",
+    "signing_in": "Signing you in…",
+    "callback_failed": "This sign-in link is invalid or has expired.",
+    "go_to_signin": "Go back to sign in",
+    "sign_out": "Sign Out",
+    "sign_out_confirm": "Are you sure you want to sign out?"
+  },
+  "common": {
+    "copy": "Copy",
+    "share": "Share",
+    "copied": "Copied!",
+    "loading": "Loading...",
+    "error_network": "Couldn't load. Try again",
+    "try_again": "Try again",
+    "cancel": "Cancel",
+    "ok": "OK",
+    "offline": "You're offline. Some features may not work."
+  },
+  "number": {
+    "inbox": "Inbox",
+    "no_messages": "No messages for this number",
+    "release": "Release number",
+    "release_title": "Release this number?",
+    "release_warning": "This number will be cancelled and you will stop receiving SMS on it. This cannot be undone.",
+    "release_confirm": "Release",
+    "us_number": "US Number",
+    "uk_number": "UK Number"
+  },
+  "profile": {
+    "subscription": "Subscription",
+    "no_plan": "No active plan",
+    "manage_subscription": "Manage subscription",
+    "preferences": "Preferences",
+    "notifications": "Notifications",
+    "language": "Language",
+    "theme": "Theme",
+    "support": "Support",
+    "email_us": "Email us",
+    "terms_privacy": "Terms & Privacy",
+    "renewal": "Renews {{date}}"
+  },
+  "settings": {
+    "language_title": "Language",
+    "english": "English",
+    "arabic": "العربية",
+    "restart_required": "Restart the app for the language change to take full effect."
+  },
+  "pricing": {
+    "title": "Choose a plan",
+    "monthly": "Monthly",
+    "annual": "Annual  -17%",
+    "per_month": "/mo",
+    "popular": "⭐ POPULAR",
+    "select": "Select",
+    "plan": {
+      "us_basic": "US Basic",
+      "uk_basic": "UK Basic",
+      "global_pro": "Global Pro"
+    },
+    "feature": {
+      "us_number": "1 US number",
+      "uk_number": "1 UK number",
+      "us_uk_numbers": "US + UK numbers",
+      "unlimited_sms": "Unlimited SMS",
+      "priority_support": "Priority support"
+    }
+  },
+  "checkout": {
+    "processing_title": "Setting up your number…",
+    "processing_desc": "This usually takes a few seconds",
+    "timeout": "Setup is taking longer than expected. You can go back and try again.",
+    "go_back": "Go back",
+    "success_title": "Your number is ready!",
+    "success_desc": "Start receiving OTPs instantly.",
+    "go_home": "Go to Home"
+  },
+  "onboarding": {
+    "slide1_title": "Get your number",
+    "slide1_desc": "A real US or UK number on your phone — ready in seconds.",
+    "slide2_title": "100+ apps supported",
+    "slide2_desc": "WhatsApp, Google, PayPal, Instagram, and more.",
+    "slide3_title": "Built for the Middle East",
+    "slide3_desc": "Designed for Saudi Arabia, UAE, Pakistan, and the whole region.",
+    "get_started": "Get started",
+    "have_account": "I already have an account",
+    "skip": "Skip"
+  }
+}

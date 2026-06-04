@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ANDROID_HOME=\"C:/Users/asus/AppData/Local/Android/Sdk\" npx expo run:android)"
+    ]
+  }
+}
