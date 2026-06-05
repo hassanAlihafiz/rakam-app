@@ -15,10 +15,36 @@ import {
 } from 'react-native';
 
 import { colors, radius, spacing, typography } from '@/src/constants/theme';
-import { AuthService, type MeResponse } from '@/src/lib/apiClient';
+import { AuthService, OpenAPI, type MeResponse } from '@/src/lib/apiClient';
 import { runAuthQuery } from '@/src/lib/authQuery';
 import { clearTokens } from '@/src/lib/auth';
+import { useColorScheme } from '@/components/useColorScheme';
 import { currentLocale, isRTL, useTranslation } from '@/src/lib/i18n';
+
+// Country code → full name with emoji
+const COUNTRY_NAMES: Record<string, string> = {
+  SA: '🇸🇦 Saudi Arabia',
+  AE: '🇦🇪 United Arab Emirates',
+  PK: '🇵🇰 Pakistan',
+  EG: '🇪🇬 Egypt',
+  IQ: '🇮🇶 Iraq',
+  JO: '🇯🇴 Jordan',
+  KW: '🇰🇼 Kuwait',
+  QA: '🇶🇦 Qatar',
+  BH: '🇧🇭 Bahrain',
+  OM: '🇴🇲 Oman',
+  US: '🇺🇸 United States',
+  GB: '🇬🇧 United Kingdom',
+  TR: '🇹🇷 Turkey',
+  MA: '🇲🇦 Morocco',
+  TN: '🇹🇳 Tunisia',
+  LB: '🇱🇧 Lebanon',
+};
+
+function getCountryLabel(code: string | null | undefined): string | null {
+  if (!code) return null;
+  return COUNTRY_NAMES[code.toUpperCase()] ?? `🌍 ${code}`;
+}
 
 function ProfileSkeleton() {
   return (
@@ -49,7 +75,9 @@ function formatRenewalDate(iso: string | undefined): string {
 
 export default function ProfileScreen() {
   const { t } = useTranslation();
+  const colorScheme = useColorScheme();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const themeLabel = colorScheme === 'dark' ? 'Dark' : 'Light';
 
   const meQuery = useQuery<MeResponse>({
     queryKey: ['me'],
@@ -59,7 +87,7 @@ export default function ProfileScreen() {
 
   const meData = meQuery.data;
   const email = meData?.user?.email ?? meData?.profile?.email ?? '—';
-  const country = meData?.profile?.country_code;
+  const countryLabel = getCountryLabel(meData?.profile?.country_code);
   const subscription = meData?.subscription;
 
   const localeLabel = currentLocale === 'ar' ? 'العربية' : 'English';
@@ -80,6 +108,7 @@ export default function ProfileScreen() {
         style: 'destructive',
         onPress: async () => {
           await clearTokens();
+          OpenAPI.TOKEN = undefined;
           router.replace('/auth/signin');
         },
       },
@@ -101,8 +130,8 @@ export default function ProfileScreen() {
       <View style={styles.userSection}>
         <UserCircle size={56} color={colors.textMuted} />
         <Text style={styles.email}>{email}</Text>
-        {country ? (
-          <Text style={styles.country}>{country}</Text>
+        {countryLabel ? (
+          <Text style={styles.country}>{countryLabel} (auto-detected)</Text>
         ) : null}
       </View>
 
@@ -151,7 +180,7 @@ export default function ProfileScreen() {
         </Pressable>
         <View style={styles.row}>
           <Text style={styles.rowLabel}>{t('profile.theme')}</Text>
-          <Text style={styles.rowValueMuted}>—</Text>
+          <Text style={styles.rowValue}>{themeLabel}</Text>
         </View>
       </View>
 

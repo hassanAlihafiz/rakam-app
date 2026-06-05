@@ -62,7 +62,6 @@ export default function SignupScreen() {
     setSubmitting(true);
     try {
       const result = await AuthService.postApiAuthSignup({
-        name: data.name,
         email: data.email,
         password: data.password,
       });
