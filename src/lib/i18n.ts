@@ -9,7 +9,15 @@ import en from '../../locales/en.json';
 export const supportedLocales = ['en', 'ar'] as const;
 export type SupportedLocale = (typeof supportedLocales)[number];
 
-export type TranslationKey = keyof typeof en;
+// Recursively generates all dot-notation paths from the nested JSON
+// e.g. "home.my_numbers" | "auth.brand_title" | "common.copy" ...
+type DotKeys<T, P extends string = ''> = {
+  [K in keyof T]: T[K] extends Record<string, unknown>
+    ? DotKeys<T[K], `${P}${K & string}.`>
+    : `${P}${K & string}`;
+}[keyof T];
+
+export type TranslationKey = DotKeys<typeof en>;
 
 const i18n = new I18n({ en, ar });
 i18n.enableFallback = true;
