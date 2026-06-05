@@ -17,7 +17,7 @@ Notifications.setNotificationHandler({
 });
 
 // Regenerate OpenAPI client when POST /api/push/register is in the spec.
-const PUSH_REGISTER_URL = 'https://rakam.app/api/push/register';
+const PUSH_REGISTER_URL = 'https://www.rakam.app/api/push/register';
 
 export async function registerForPushNotifications(): Promise<string | null> {
   try {
@@ -51,7 +51,7 @@ export async function registerForPushNotifications(): Promise<string | null> {
       if (!accessToken) {
         return;
       }
-      await fetch(PUSH_REGISTER_URL, {
+      const response = await fetch(PUSH_REGISTER_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,6 +59,9 @@ export async function registerForPushNotifications(): Promise<string | null> {
         },
         body: JSON.stringify({ token }),
       });
+      if (!response.ok) {
+        throw new Error(`Push registration failed: ${response.status}`);
+      }
     });
 
     return token;
