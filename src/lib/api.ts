@@ -1,7 +1,7 @@
 import { clearTokens, getToken, setTokens } from '@/src/lib/auth';
 import { ApiError, AuthService, OpenAPI } from '@/src/lib/apiClient';
 
-OpenAPI.BASE = 'https://www.rakam.app';
+OpenAPI.BASE = process.env.EXPO_PUBLIC_API_URL ?? 'https://www.rakam.app';
 
 export class AuthExpiredError extends Error {
   constructor() {

@@ -11,21 +11,21 @@ import { request as __request } from '../core/request';
 export class AuthService {
     /**
      * Create a new account
-     * Registers a new user with email + password. Returns a session immediately if email confirmation is disabled. The mobile app should store both access_token and refresh_token from the session.
+     * Registers a new user with email + password. Sends a 6-digit OTP to the email.
      * @param requestBody
-     * @returns any Account created
+     * @returns any OTP sent
      * @throws ApiError
      */
     public static postApiAuthSignup(
         requestBody: {
             email: string;
             password: string;
+            name?: string;
         },
     ): CancelablePromise<{
         ok?: boolean;
-        user?: User;
-        session?: Session | null;
-        needsEmailConfirmation?: boolean;
+        needsOtpVerification?: boolean;
+        email?: string;
     }> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -34,6 +34,55 @@ export class AuthService {
             mediaType: 'application/json',
             errors: {
                 400: `Invalid email or password too short`,
+            },
+        });
+    }
+
+    /**
+     * Verify email with OTP
+     * @param requestBody
+     * @returns any Account confirmed
+     * @throws ApiError
+     */
+    public static postApiAuthVerifyOtp(
+        requestBody: {
+            email: string;
+            otp: string;
+        },
+    ): CancelablePromise<{
+        ok?: boolean;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/auth/verify-otp',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Invalid or expired OTP`,
+            },
+        });
+    }
+
+    /**
+     * Resend OTP
+     * @param requestBody
+     * @returns any OTP resent
+     * @throws ApiError
+     */
+    public static postApiAuthResendOtp(
+        requestBody: {
+            email: string;
+        },
+    ): CancelablePromise<{
+        ok?: boolean;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/auth/resend-otp',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `No pending signup found`,
             },
         });
     }

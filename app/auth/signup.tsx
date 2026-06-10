@@ -17,10 +17,13 @@ import {
 } from 'react-native';
 import { z } from 'zod';
 
+import * as SecureStore from 'expo-secure-store';
+
 import { colors, radius, spacing, typography } from '@/src/constants/theme';
 import { ApiError, AuthService } from '@/src/lib/apiClient';
-import { setTokens } from '@/src/lib/auth';
 import { isRTL, useTranslation } from '@/src/lib/i18n';
+
+export const PENDING_OTP_KEY = 'pending_otp_email';
 
 type SignupForm = {
   name: string;
@@ -64,24 +67,17 @@ export default function SignupScreen() {
       const result = await AuthService.postApiAuthSignup({
         email: data.email,
         password: data.password,
+        name: data.name,
       });
 
-      if (result.needsEmailConfirmation) {
-        router.push(
-          `/auth/check-email?email=${encodeURIComponent(data.email)}`,
-        );
+      if (result.needsOtpVerification) {
+        await SecureStore.setItemAsync(PENDING_OTP_KEY, data.email);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        router.push(`/auth/verify-otp?email=${encodeURIComponent(data.email)}` as any);
         return;
       }
 
-      const accessToken = result.session?.access_token;
-      const refreshToken = result.session?.refresh_token;
-      if (!accessToken || !refreshToken) {
-        setError('email', { message: t('common.error_network') });
-        return;
-      }
-
-      await setTokens(accessToken, refreshToken);
-      router.replace('/(tabs)');
+      setError('email', { message: t('common.error_network') });
     } catch (error) {
       if (error instanceof ApiError) {
         const message =

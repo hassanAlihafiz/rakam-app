@@ -38,11 +38,10 @@ export type MagicLinkRequest = {
 
 // — Response shapes (inline in generated services) —
 
-export type AuthSessionResponse = {
+export type SignupResponse = {
   ok?: boolean;
-  user?: User;
-  session?: Session | null;
-  needsEmailConfirmation?: boolean;
+  needsOtpVerification?: boolean;
+  email?: string;
 };
 
 export type SigninResponse = {
