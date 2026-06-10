@@ -25,7 +25,16 @@ export const unstable_settings = {
 };
 
 const ONBOARDING_KEY = 'onboarding_completed';
-const queryClient = new QueryClient();
+const PENDING_OTP_KEY = 'pending_otp_email';
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      retryDelay: 2000,
+      staleTime: 30_000,
+    },
+  },
+});
 
 SplashScreen.preventAutoHideAsync();
 
@@ -56,10 +65,17 @@ export default function RootLayout() {
         await bootstrapToken();
         const onboardingCompleted = await SecureStore.getItemAsync(ONBOARDING_KEY);
         const session = await hasValidSession();
+        const pendingOtpEmail = await SecureStore.getItemAsync(PENDING_OTP_KEY);
         didNavigate.current = true;
 
         if (!onboardingCompleted && !session) {
           routerRef.current.replace('/onboarding');
+        } else if (!session && pendingOtpEmail) {
+          // User was mid-OTP verification when they closed the app — resume
+          routerRef.current.replace(
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            `/auth/verify-otp?email=${encodeURIComponent(pendingOtpEmail)}` as any,
+          );
         } else {
           if (!onboardingCompleted && session) {
             await SecureStore.setItemAsync(ONBOARDING_KEY, 'true');

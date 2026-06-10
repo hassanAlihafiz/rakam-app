@@ -17,7 +17,8 @@ Notifications.setNotificationHandler({
 });
 
 // Regenerate OpenAPI client when POST /api/push/register is in the spec.
-const PUSH_REGISTER_URL = 'https://www.rakam.app/api/push/register';
+const API_BASE = process.env.EXPO_PUBLIC_API_URL ?? 'https://www.rakam.app';
+const PUSH_REGISTER_URL = `${API_BASE}/api/push/register`;
 
 export async function registerForPushNotifications(): Promise<string | null> {
   try {

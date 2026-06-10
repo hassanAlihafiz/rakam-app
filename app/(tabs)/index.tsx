@@ -4,7 +4,7 @@ import * as Notifications from 'expo-notifications';
 import { router } from 'expo-router';
 import { Plus, Smartphone, UserCircle } from 'lucide-react-native';
 import { MotiView } from 'moti';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import {
   FlatList,
   Pressable,
@@ -75,13 +75,12 @@ export default function HomeScreen() {
   const numbers = numbersQuery.data ?? [];
   const messages = messagesQuery.data?.messages ?? [];
 
-  useEffect(() => {
-    if (!messagesQuery.isSuccess) {
-      return;
-    }
+  // Unique channel name per mount — prevents "cannot add callbacks after subscribe()" error
+  const channelName = useRef(`messages-${Date.now()}`);
 
+  useEffect(() => {
     const channel = supabase
-      .channel('messages')
+      .channel(channelName.current)
       .on(
         'postgres_changes',
         {
@@ -108,9 +107,9 @@ export default function HomeScreen() {
       .subscribe();
 
     return () => {
-      channel.unsubscribe();
+      void channel.unsubscribe();
     };
-  }, [messagesQuery.isSuccess, queryClient]);
+  }, [queryClient]);
 
   useEffect(() => {
     if (numbers.length > 0) {
@@ -298,116 +297,116 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  content: {
-    padding: spacing.xl,
-    paddingBottom: spacing['3xl'],
-  },
-  topBar: {
-    flexDirection: isRTL ? 'row-reverse' : 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: spacing['2xl'],
-  },
-  brandTitle: {
-    fontSize: typography.h1.size,
-    fontWeight: typography.h1.weight,
-    color: colors.textPrimary,
-    textAlign: isRTL ? 'right' : 'left',
-  },
-  section: {
-    marginBottom: spacing.xl,
-  },
-  sectionHeading: {
-    fontSize: typography.h2.size,
-    fontWeight: typography.h2.weight,
-    color: colors.textPrimary,
-    marginBottom: spacing.md,
-    textAlign: isRTL ? 'right' : 'left',
-  },
-  numbersScroll: {
-    paddingEnd: spacing.md,
-  },
-  skeletonCard: {
-    width: 280,
-    height: 120,
-    borderRadius: radius.medium,
-    backgroundColor: colors.border,
-    marginEnd: spacing.md,
-  },
-  skeletonMessage: {
-    height: 88,
-    borderRadius: radius.medium,
-    backgroundColor: colors.border,
-    marginBottom: spacing.md,
-  },
-  messagesLoading: {
-    gap: spacing.md,
-  },
-  stateBox: {
-    alignItems: 'center',
-    paddingVertical: spacing.xl,
-    gap: spacing.md,
-  },
-  stateText: {
-    fontSize: typography.body.size,
-    color: colors.textSecondary,
-    textAlign: 'center',
-  },
-  retryText: {
-    fontSize: typography.body.size,
-    fontWeight: typography.h2.weight,
-    color: colors.accent,
-  },
-  emptyTitle: {
-    fontSize: typography.h1.size,
-    fontWeight: typography.h1.weight,
-    color: colors.textPrimary,
-    textAlign: 'center',
-  },
-  emptyDesc: {
-    fontSize: typography.body.size,
-    fontWeight: typography.body.weight,
-    color: colors.textSecondary,
-    textAlign: 'center',
-    maxWidth: 280,
-  },
-  primaryButton: {
-    backgroundColor: colors.primary,
-    borderRadius: radius.small,
-    paddingVertical: spacing.base,
-    paddingHorizontal: spacing.xl,
-    marginTop: spacing.sm,
-  },
-  primaryButtonText: {
-    fontSize: typography.body.size,
-    fontWeight: typography.h2.weight,
-    color: colors.textPrimary,
-  },
-  emptyMessages: {
-    fontSize: typography.body.size,
-    color: colors.textMuted,
-    textAlign: 'center',
-    paddingVertical: spacing.lg,
-  },
-  addButton: {
-    flexDirection: isRTL ? 'row-reverse' : 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.sm,
-    borderWidth: 1,
-    borderStyle: 'dashed',
-    borderColor: colors.border,
-    borderRadius: radius.medium,
-    paddingVertical: spacing.base,
-    marginTop: spacing.md,
-  },
-  addButtonText: {
-    fontSize: typography.body.size,
-    fontWeight: typography.caption.weight,
-    color: colors.textSecondary,
-  },
-});
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
+    },
+    content: {
+      padding: spacing.xl,
+      paddingBottom: spacing['3xl'],
+    },
+    topBar: {
+      flexDirection: isRTL ? 'row-reverse' : 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: spacing['2xl'],
+    },
+    brandTitle: {
+      fontSize: typography.h1.size,
+      fontWeight: typography.h1.weight,
+      color: colors.textPrimary,
+      textAlign: isRTL ? 'right' : 'left',
+    },
+    section: {
+      marginBottom: spacing.xl,
+    },
+    sectionHeading: {
+      fontSize: typography.h2.size,
+      fontWeight: typography.h2.weight,
+      color: colors.textPrimary,
+      marginBottom: spacing.md,
+      textAlign: isRTL ? 'right' : 'left',
+    },
+    numbersScroll: {
+      paddingEnd: spacing.md,
+    },
+    skeletonCard: {
+      width: 280,
+      height: 120,
+      borderRadius: radius.medium,
+      backgroundColor: colors.border,
+      marginEnd: spacing.md,
+    },
+    skeletonMessage: {
+      height: 88,
+      borderRadius: radius.medium,
+      backgroundColor: colors.border,
+      marginBottom: spacing.md,
+    },
+    messagesLoading: {
+      gap: spacing.md,
+    },
+    stateBox: {
+      alignItems: 'center',
+      paddingVertical: spacing.xl,
+      gap: spacing.md,
+    },
+    stateText: {
+      fontSize: typography.body.size,
+      color: colors.textSecondary,
+      textAlign: 'center',
+    },
+    retryText: {
+      fontSize: typography.body.size,
+      fontWeight: typography.h2.weight,
+      color: colors.accent,
+    },
+    emptyTitle: {
+      fontSize: typography.h1.size,
+      fontWeight: typography.h1.weight,
+      color: colors.textPrimary,
+      textAlign: 'center',
+    },
+    emptyDesc: {
+      fontSize: typography.body.size,
+      fontWeight: typography.body.weight,
+      color: colors.textSecondary,
+      textAlign: 'center',
+      maxWidth: 280,
+    },
+    primaryButton: {
+      backgroundColor: colors.primary,
+      borderRadius: radius.small,
+      paddingVertical: spacing.base,
+      paddingHorizontal: spacing.xl,
+      marginTop: spacing.sm,
+    },
+    primaryButtonText: {
+      fontSize: typography.body.size,
+      fontWeight: typography.h2.weight,
+      color: colors.textPrimary,
+    },
+    emptyMessages: {
+      fontSize: typography.body.size,
+      color: colors.textMuted,
+      textAlign: 'center',
+      paddingVertical: spacing.lg,
+    },
+    addButton: {
+      flexDirection: isRTL ? 'row-reverse' : 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: spacing.sm,
+      borderWidth: 1,
+      borderStyle: 'dashed',
+      borderColor: colors.border,
+      borderRadius: radius.medium,
+      paddingVertical: spacing.base,
+      marginTop: spacing.md,
+    },
+    addButtonText: {
+      fontSize: typography.body.size,
+      fontWeight: typography.caption.weight,
+      color: colors.textSecondary,
+    },
+  });

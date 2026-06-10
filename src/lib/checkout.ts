@@ -8,7 +8,8 @@ export type CheckoutResponse = {
   checkout_url: string;
 };
 
-const CHECKOUT_URL = 'https://rakam.app/api/checkout';
+const API_BASE = process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:3000';
+const CHECKOUT_URL = `${API_BASE}/api/checkout`;
 
 export async function createCheckout(
   planId: string,
