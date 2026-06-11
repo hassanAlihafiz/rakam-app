@@ -1,6 +1,8 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { CheckCircle } from 'lucide-react-native';
 import { MotiView } from 'moti';
+import { useEffect } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useReducedMotion } from 'react-native-reanimated';
 
@@ -10,6 +12,12 @@ import { useTranslation } from '@/src/lib/i18n';
 export default function CheckoutSuccessScreen() {
   const { t } = useTranslation();
   const reduced = useReducedMotion();
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    void queryClient.invalidateQueries({ queryKey: ['me'] });
+    void queryClient.invalidateQueries({ queryKey: ['numbers'] });
+  }, [queryClient]);
 
   return (
     <View style={styles.container}>

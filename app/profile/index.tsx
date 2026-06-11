@@ -140,11 +140,24 @@ export default function ProfileScreen() {
         {subscription?.plan_name ? (
           <>
             <Text style={styles.planName}>{subscription.plan_name}</Text>
+            {subscription.is_trial ? (
+              <Text style={styles.trialBadge}>{t('trial.active_badge')}</Text>
+            ) : null}
             {subscription.renewal_date ? (
               <Text style={styles.planMeta}>
-                {t('profile.renewal', {
-                  date: formatRenewalDate(subscription.renewal_date),
-                })}
+                {subscription.is_trial
+                  ? t('trial.days_left', {
+                      count: Math.max(
+                        0,
+                        Math.ceil(
+                          (new Date(subscription.renewal_date).getTime() - Date.now()) /
+                            (1000 * 60 * 60 * 24),
+                        ),
+                      ),
+                    })
+                  : t('profile.renewal', {
+                      date: formatRenewalDate(subscription.renewal_date),
+                    })}
               </Text>
             ) : null}
           </>
@@ -251,6 +264,17 @@ const styles = StyleSheet.create({
     fontSize: typography.body.size,
     fontWeight: typography.h2.weight,
     color: colors.textPrimary,
+  },
+  trialBadge: {
+    alignSelf: 'flex-start',
+    fontSize: typography.caption.size,
+    fontWeight: typography.caption.weight,
+    color: colors.warning,
+    backgroundColor: colors.background,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    borderRadius: radius.full,
+    overflow: 'hidden',
   },
   planMeta: {
     fontSize: typography.body.size,

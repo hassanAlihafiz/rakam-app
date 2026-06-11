@@ -108,6 +108,13 @@
       "priority_support": "Priority support"
     }
   },
+  "trial": {
+    "expired_title": "Free trial ended",
+    "expired_message": "Your 2-month free US Basic plan has expired. Subscribe to keep your number and receive OTPs.",
+    "buy_plan": "Buy a plan",
+    "active_badge": "Free trial",
+    "days_left": "{{count}} days left"
+  },
   "checkout": {
     "processing_title": "Setting up your number…",
     "processing_desc": "This usually takes a few seconds",

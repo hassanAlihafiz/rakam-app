@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import * as Haptics from 'expo-haptics';
 import * as Notifications from 'expo-notifications';
 import { router } from 'expo-router';
-import { Plus, Smartphone, UserCircle } from 'lucide-react-native';
+import { Plus, Smartphone } from 'lucide-react-native';
 import { MotiView } from 'moti';
 import { useCallback, useEffect, useRef } from 'react';
 import {
@@ -15,15 +15,18 @@ import {
   View,
 } from 'react-native';
 import { useReducedMotion } from 'react-native-reanimated';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { MessageCard } from '@/src/components/MessageCard';
 import { NumberCard } from '@/src/components/NumberCard';
 import { colors, radius, spacing, typography } from '@/src/constants/theme';
 import {
+  AuthService,
   MessagesService,
   NumbersService,
   type Message,
   type MessagesListResponse,
+  type MeResponse,
   type PhoneNumber,
 } from '@/src/lib/apiClient';
 import { runAuthQuery } from '@/src/lib/authQuery';
@@ -59,6 +62,13 @@ export default function HomeScreen() {
   const { t } = useTranslation();
   const reduced = useReducedMotion();
   const queryClient = useQueryClient();
+
+  const meQuery = useQuery<MeResponse>({
+    queryKey: ['me'],
+    queryFn: () => runAuthQuery(() => AuthService.getApiAuthMe()) as Promise<MeResponse>,
+    staleTime: 5 * 60 * 1000,
+  });
+
 
   const numbersQuery = useQuery({
     queryKey: ['numbers'],
@@ -239,8 +249,11 @@ export default function HomeScreen() {
         <Text style={styles.brandTitle}>{t('auth.brand_title')}</Text>
         <Pressable
           onPress={() => router.push('/profile')}
-          accessibilityRole="button">
-          <UserCircle size={28} color={colors.textSecondary} />
+          accessibilityRole="button"
+          style={styles.avatarSmall}>
+          <Text style={styles.avatarSmallText}>
+            {(meQuery.data?.profile?.display_name ?? meQuery.data?.user?.email ?? '?')[0].toUpperCase()}
+          </Text>
         </Pressable>
       </View>
       {renderNumbersSection()}
@@ -270,8 +283,9 @@ export default function HomeScreen() {
     !messagesQuery.isLoading && !messagesQuery.isError;
 
   return (
+    <SafeAreaView style={styles.container} edges={['top']}>
     <FlatList
-      style={styles.container}
+      style={{ flex: 1 }}
       contentContainerStyle={styles.content}
       data={showMessagesList ? messages : []}
       keyExtractor={(item, index) =>
@@ -293,6 +307,7 @@ export default function HomeScreen() {
         />
       }
     />
+    </SafeAreaView>
   );
 }
 
@@ -316,6 +331,19 @@ const styles = StyleSheet.create({
       fontWeight: typography.h1.weight,
       color: colors.textPrimary,
       textAlign: isRTL ? 'right' : 'left',
+    },
+    avatarSmall: {
+      width: 36,
+      height: 36,
+      borderRadius: 18,
+      backgroundColor: colors.primary,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    avatarSmallText: {
+      fontSize: typography.body.size,
+      fontWeight: typography.h1.weight,
+      color: colors.background,
     },
     section: {
       marginBottom: spacing.xl,
