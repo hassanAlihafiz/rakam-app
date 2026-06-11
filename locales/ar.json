@@ -108,6 +108,13 @@
       "priority_support": "دعم أولوية"
     }
   },
+  "trial": {
+    "expired_title": "انتهت الفترة التجريبية",
+    "expired_message": "انتهت باقتك المجانية لمدة شهرين (أساسي أمريكي). اشترك للاحتفاظ برقمك واستقبال رموز OTP.",
+    "buy_plan": "اشترِ باقة",
+    "active_badge": "تجربة مجانية",
+    "days_left": "{{count}} يوم متبقي"
+  },
   "checkout": {
     "processing_title": "جاري إعداد رقمك…",
     "processing_desc": "عادةً يستغرق ذلك بضع ثوانٍ",

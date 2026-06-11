@@ -1,10 +1,12 @@
 import { Tabs } from 'expo-router';
-import { Home, User } from 'lucide-react-native';
+import { Home } from 'lucide-react-native';
 
+import { SubscriptionGate } from '@/src/components/SubscriptionGate';
 import { colors } from '@/src/constants/theme';
 
 export default function TabLayout() {
   return (
+    <>
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: colors.primary,
@@ -25,5 +27,7 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
+    <SubscriptionGate />
+    </>
   );
 }

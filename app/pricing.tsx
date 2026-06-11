@@ -13,8 +13,10 @@ import {
   View,
 } from 'react-native';
 
+import { ScreenBackButton } from '@/src/components/ScreenBackButton';
 import theme, { colors, radius, spacing, typography } from '@/src/constants/theme';
 import { runAuthQuery } from '@/src/lib/authQuery';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { createCheckout, type BillingCycle } from '@/src/lib/checkout';
 import { isRTL, useTranslation } from '@/src/lib/i18n';
 
@@ -95,9 +97,11 @@ export default function PricingScreen() {
   };
 
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.content}>
+    <SafeAreaView style={styles.container} edges={['top']}>
+    <ScrollView contentContainerStyle={styles.content}>
+      <View style={styles.headerRow}>
+        <ScreenBackButton />
+      </View>
       <Text style={styles.title}>{t('pricing.title')}</Text>
 
       <View style={styles.toggle}>
@@ -186,6 +190,7 @@ export default function PricingScreen() {
         );
       })}
     </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -198,6 +203,10 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
     paddingBottom: spacing['4xl'],
     gap: spacing.lg,
+  },
+  headerRow: {
+    flexDirection: isRTL ? 'row-reverse' : 'row',
+    marginBottom: spacing.xs,
   },
   title: {
     fontSize: typography.h1.size,

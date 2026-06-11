@@ -16,6 +16,7 @@ import {
 
 import { MessageCard } from '@/src/components/MessageCard';
 import { colors, radius, spacing, typography } from '@/src/constants/theme';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { runAuthQuery } from '@/src/lib/authQuery';
 import {
   MessagesService,
@@ -182,8 +183,9 @@ export default function NumberDetailScreen() {
   };
 
   return (
+    <SafeAreaView style={styles.container} edges={['top']}>
     <FlatList
-      style={styles.container}
+      style={{ flex: 1 }}
       contentContainerStyle={styles.content}
       data={messagesQuery.isSuccess ? (messagesQuery.data ?? []) : []}
       keyExtractor={(item, index) =>
@@ -193,6 +195,7 @@ export default function NumberDetailScreen() {
       ListHeaderComponent={listHeader}
       ListEmptyComponent={listEmpty}
     />
+    </SafeAreaView>
   );
 }
 

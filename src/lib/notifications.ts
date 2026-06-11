@@ -14,7 +14,7 @@ Notifications.setNotificationHandler({
     shouldShowBanner: true,
     shouldShowList: true,
   }),
-});
+});   
 
 // Regenerate OpenAPI client when POST /api/push/register is in the spec.
 const API_BASE = process.env.EXPO_PUBLIC_API_URL ?? 'https://www.rakam.app';

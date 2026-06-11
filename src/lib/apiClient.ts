@@ -51,9 +51,14 @@ export type SigninResponse = {
 };
 
 export type Subscription = {
-  plan_name?: string;
-  renewal_date?: string;
-  management_url?: string;
+  plan_name?: string | null;
+  plan?: 'free' | 'us_basic' | 'uk_basic' | 'global_pro' | null;
+  status?: 'active' | 'cancelled' | 'past_due' | 'paused' | 'trialing' | null;
+  renewal_date?: string | null;
+  management_url?: string | null;
+  is_trial?: boolean;
+  trial_expired?: boolean;
+  access_allowed?: boolean;
 };
 
 export type MeResponse = {
