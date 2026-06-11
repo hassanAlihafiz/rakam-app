@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { router } from 'expo-router';
-import { ChevronRight, UserCircle } from 'lucide-react-native';
+import { ChevronRight } from 'lucide-react-native';
 import { MotiView } from 'moti';
 import { useState } from 'react';
 import {
@@ -13,7 +13,9 @@ import {
   Text,
   View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { ScreenBackButton } from '@/src/components/ScreenBackButton';
 import { colors, radius, spacing, typography } from '@/src/constants/theme';
 import { AuthService, OpenAPI, type MeResponse } from '@/src/lib/apiClient';
 import { runAuthQuery } from '@/src/lib/authQuery';
@@ -73,6 +75,22 @@ function formatRenewalDate(iso: string | undefined): string {
   }
 }
 
+function getUserInitial(meData: MeResponse | undefined): string {
+  const source =
+    meData?.profile?.display_name?.trim() ||
+    meData?.user?.email ||
+    '?';
+  return source[0].toUpperCase();
+}
+
+function getDisplayName(meData: MeResponse | undefined): string {
+  const name = meData?.profile?.display_name?.trim();
+  if (name) return name;
+  const email = meData?.user?.email ?? meData?.profile?.email;
+  if (email) return email.split('@')[0];
+  return '—';
+}
+
 export default function ProfileScreen() {
   const { t } = useTranslation();
   const colorScheme = useColorScheme();
@@ -87,6 +105,8 @@ export default function ProfileScreen() {
 
   const meData = meQuery.data;
   const email = meData?.user?.email ?? meData?.profile?.email ?? '—';
+  const displayName = getDisplayName(meData);
+  const avatarInitial = getUserInitial(meData);
   const countryLabel = getCountryLabel(meData?.profile?.country_code);
   const subscription = meData?.subscription;
 
@@ -117,18 +137,29 @@ export default function ProfileScreen() {
 
   if (meQuery.isLoading) {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container} edges={['top']}>
+        <View style={styles.headerRow}>
+          <ScreenBackButton />
+        </View>
         <ProfileSkeleton />
-      </View>
+      </SafeAreaView>
     );
   }
 
   return (
+    <SafeAreaView style={styles.container} edges={['top']}>
     <ScrollView
-      style={styles.container}
+      style={styles.scroll}
       contentContainerStyle={styles.content}>
+      <View style={styles.headerRow}>
+        <ScreenBackButton />
+      </View>
+
       <View style={styles.userSection}>
-        <UserCircle size={56} color={colors.textMuted} />
+        <View style={styles.avatar} accessibilityLabel={displayName}>
+          <Text style={styles.avatarText}>{avatarInitial}</Text>
+        </View>
+        <Text style={styles.displayName}>{displayName}</Text>
         <Text style={styles.email}>{email}</Text>
         {countryLabel ? (
           <Text style={styles.country}>{countryLabel} (auto-detected)</Text>
@@ -215,6 +246,7 @@ export default function ProfileScreen() {
         <Text style={styles.signOutText}>{t('auth.sign_out')}</Text>
       </Pressable>
     </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -223,20 +255,50 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
+  scroll: {
+    flex: 1,
+  },
   content: {
-    padding: spacing.xl,
+    paddingHorizontal: spacing.xl,
     paddingBottom: spacing['4xl'],
+  },
+  headerRow: {
+    flexDirection: isRTL ? 'row-reverse' : 'row',
+    alignItems: 'center',
+    paddingTop: spacing.sm,
+    paddingBottom: spacing.md,
   },
   userSection: {
     alignItems: 'center',
     gap: spacing.sm,
     marginBottom: spacing['2xl'],
-    marginTop: spacing.xl,
+    marginTop: spacing.lg,
+    paddingTop: spacing.md,
+  },
+  avatar: {
+    width: 72,
+    height: 72,
+    borderRadius: 36,
+    backgroundColor: colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: spacing.sm,
+  },
+  avatarText: {
+    fontSize: typography.h1.size,
+    fontWeight: typography.h1.weight,
+    color: colors.background,
+  },
+  displayName: {
+    fontSize: typography.h2.size,
+    fontWeight: typography.h2.weight,
+    color: colors.textPrimary,
+    textAlign: 'center',
   },
   email: {
     fontSize: typography.body.size,
     fontWeight: typography.body.weight,
-    color: colors.textPrimary,
+    color: colors.textSecondary,
     textAlign: 'center',
   },
   country: {
@@ -323,9 +385,9 @@ const styles = StyleSheet.create({
     color: colors.danger,
   },
   skeletonBlock: {
-    padding: spacing.xl,
+    paddingHorizontal: spacing.xl,
     gap: spacing.md,
-    marginTop: spacing.xl,
+    marginTop: spacing.lg,
   },
   skeletonRow: {
     height: 56,
